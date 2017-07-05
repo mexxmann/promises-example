@@ -6,6 +6,7 @@ const app = express();
 
 // Main API routes.
 app.use(require('./routes'));
+app.use('/cb', require('./routescb'));
 
 http.createServer(app).listen(3000, () => {
   console.log('Express server listening on port 3000');
