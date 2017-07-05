@@ -3,10 +3,9 @@ const express = require('express');
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-/**
- *
- */
-
+function logWithDate(message) {
+  console.log(`${new Date()}: ${message}`);
+}
 
 /**
  * Returns some flight details given a customer email address
@@ -16,13 +15,14 @@ const router = express.Router();
 function getDeparture(customerEmail) {
   return new Promise((resolve, reject) => {
     if (customerEmail === 'bob@gmail.com') {
-      console.log(`After a delay, will be looking up departure details for customer with email: ${customerEmail}`);
+      logWithDate(`Making database or network call to look up departure details for \
+customer with email: ${customerEmail}`);
       setTimeout(() => {
         resolve({
           flightId: 7,
           flightTime: new Date(2017, 7, 1, 13, 0, 0),
         });
-      }, 100);
+      }, 2000);
     } else {
       reject('Sorry, we only serve one customer - bob@gmail.com');
     }
@@ -32,7 +32,7 @@ function getDeparture(customerEmail) {
 function getFlightDetails(flightId) {
   return new Promise((resolve, reject) => {
     if (flightId === 7) {
-      console.log(`After a delay, will be looking up flight details for flight ID: ${flightId}`);
+      logWithDate(`Making database or network call to look up flight details for flight ID: ${flightId}`);
       setTimeout(() => {
         resolve({
           flightPath: [
@@ -49,7 +49,7 @@ function getFlightDetails(flightId) {
           ],
           pilotId: 99,
         });
-      }, 100);
+      }, 2000);
     } else {
       reject('Sorry, we only know about one flight Id: 7');
     }
@@ -59,7 +59,7 @@ function getFlightDetails(flightId) {
 function getPilotSchedule(pilotId) {
   return new Promise((resolve, reject) => {
     if (pilotId === 99) {
-      console.log(`After a delay, will be looking up pilot schedule for pilot ID: ${pilotId}`);
+      logWithDate(`Making database or network call to look up pilot schedule for pilot ID: ${pilotId}`);
       setTimeout(() => {
         resolve({
           schedule: [
@@ -82,7 +82,7 @@ function getPilotSchedule(pilotId) {
 
 function getForecast(date) {
   return new Promise((resolve, reject) => {
-    console.log(`After a delay, will be looking up forcast for date: ${date}`);
+    logWithDate(`Making database or network call to look up forcast for date: ${date}`);
     setTimeout(() => {
       resolve({
         weatherOutlook: 'good',
@@ -92,7 +92,15 @@ function getForecast(date) {
 }
 
 function getFlightEta(weatherOutlook, flightPath) {
-
+  return new Promise((resolve, reject) => {
+    logWithDate(`Making database or network call to look up eta for Flight with path: ${JSON.stringify(flightPath)} \
+under weather condition: ${weatherOutlook}`);
+    setTimeout(() => {
+      resolve({
+        eta: new Date(2017, 7, 1, 17, 0, 0),
+      });
+    }, 2000);
+  });
 }
 
 router.get('/', (req, res) => {
@@ -101,24 +109,44 @@ router.get('/', (req, res) => {
 
 router.get('/departures/:userEmail/flightDetails/pilotSchedule', (req, res) => {
   userEmail = req.params.userEmail;
-  console.log(`userEmail: ${userEmail}`);
+  logWithDate(`userEmail: ${userEmail}`);
   getDeparture(userEmail).then((departure) => {
-    console.log(`getDeparture promise resolved with: ${JSON.stringify(departure)}`);
+    // logWithDate(`getDeparture promise resolved with: ${JSON.stringify(departure)}`);
     return getFlightDetails(departure.flightId);
   })
   .then((flightDetails) => {
-    console.log(`getFlightDetails promise resolved with: ${JSON.stringify(flightDetails)}`);
+    // logWithDate(`getFlightDetails promise resolved with: ${JSON.stringify(flightDetails)}`);
     return getPilotSchedule(flightDetails.pilotId);
   })
   .then((pilotSchedule) => {
-    console.log(`getPilotSchedule promise resolved with: ${JSON.stringify(pilotSchedule)}`);
+    // logWithDate(`getPilotSchedule promise resolved with: ${JSON.stringify(pilotSchedule)}`);
     return res.status(200).send(pilotSchedule);
   })
   .catch((err) => {
-    console.log(`Caught exception: ${String(err)}`);
+    logWithDate(`Caught exception: ${String(err)}`);
     return res.status(500).send(err);
   });
 });
 
+router.get('/departures/:userEmail/flightDetails/eta', (req, res) => {
+  userEmail = req.params.userEmail;
+  logWithDate(`userEmail: ${userEmail}`);
+  getDeparture(userEmail).then((departure) => {
+    return Promise.all([
+      getFlightDetails(departure.flightId),
+      getForecast(departure.flightTime)]);
+  })
+  .then(([flightDetails, forecast]) => {
+    return getFlightEta(forecast.weatherOutlook, flightDetails.flightPath);
+  })
+  .then((flightEta) => {
+    logWithDate(`getFlightEta promise resolved with: ${JSON.stringify(flightEta)}`);
+    return res.status(200).send(flightEta);
+  })
+  .catch((err) => {
+    logWithDate(`Caught exception: ${String(err)}`);
+    return res.status(500).send(err);
+  });
+});
 
 module.exports = router;

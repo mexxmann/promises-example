@@ -6,6 +6,9 @@
   * Node: Fully supported in Node 6.4 (Investopedia's current node version as of Jul 2017) - reference: http://node.green/
   * Browser: All major browsers except IE11 - reference: https://kangax.github.io/compat-table/es6/
     * Can use jQuery deferred - out of scope: differences between jQuery deferred and standard promises
+* TODO:
+  * chain example without promises to show nesting
+  * async/await examples
 
 # Setup
 Clone Repository
