@@ -54,6 +54,28 @@ function getFlightDetails(flightId) {
   });
 }
 
+function resolveAirportCode(airportCode) {
+  return new Promise((resolve, reject) => {
+    const sleepTime = Math.floor((Math.random() * 2000) + 1000);
+    const validCodes = ['YEG', 'YYC', 'DEN'];
+    const mapping = {
+      YEG: 'Edmonton',
+      YYC: 'Calgary',
+      DEN: 'Denver',
+    };
+
+    util.logWithDate(`Resolving airportCode [${airportCode}] taking [${sleepTime} ms]`);
+
+    if (validCodes.includes(airportCode)) {
+      setTimeout(() => {
+        resolve(mapping[airportCode]);
+      }, sleepTime);
+    } else {
+      reject(`Sorry. We only fly to ${validCodes}`);
+    }
+  });
+}
+
 /**
  * Returns a passenger manifest given the manifest ID
  * @param {int} manifestId - identifies the manifest
@@ -121,6 +143,7 @@ module.exports = {
   getDeparture,
   getFlightDetails,
   getPassengerManifest,
+  resolveAirportCode,
   getForecast,
   getFlightEta,
 };

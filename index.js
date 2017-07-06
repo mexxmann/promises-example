@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 // Main API routes.
 app.use(require('./api/routes'));
 app.use('/cb', require('./api/routescb'));
+app.use('/gotcha', require('./api/gotcha'));
 
 http.createServer(app).listen(3000, () => {
   console.log('Express server listening on port 3000');
