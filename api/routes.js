@@ -28,7 +28,8 @@ function getPassengerManifestForUser(userEmail, res) {
     return res.status(200).send(passengerManifest);
   })
 
-  // Handle any errors
+  // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
+  // an exception.
   .catch((err) => {
     util.logWithDate(`Caught exception: ${String(err)}`);
     return res.status(500).send(err);
@@ -56,7 +57,8 @@ async function getPassengerManifestForUserUsingAsyncAwait(userEmail, res) {
     util.logWithDate(`getPassengerManifest promise resolved with: ${JSON.stringify(passengerManifest)}`);
     return res.status(200).send(passengerManifest);
 
-    // Handle any errors
+    // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
+    // an exception.
   } catch (err) {
     util.logWithDate(`Caught exception: ${String(err)}`);
     return res.status(500).send(err);
@@ -93,7 +95,8 @@ function getEtaForUser(userEmail, res) {
     return res.status(200).send(flightEta);
   })
 
-  // Handle any errors
+  // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
+  // an exception.
   .catch((err) => {
     util.logWithDate(`Caught exception: ${String(err)}`);
     return res.status(500).send(err);
@@ -123,7 +126,8 @@ async function getEtaForUserUsingAsyncAwait(userEmail, res) {
     util.logWithDate(`getFlightEta promise resolved with: ${JSON.stringify(flightEta)}`);
     return res.status(200).send(flightEta);
 
-  // Handle any errors
+    // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
+    // an exception.
   } catch (err) {
     util.logWithDate(`Caught exception: ${String(err)}`);
     return res.status(500).send(err);
