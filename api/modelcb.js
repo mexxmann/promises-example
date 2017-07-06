@@ -1,6 +1,6 @@
 const util = require('./util');
 
-function getDeparture(customerEmail, cb) {
+function getDeparture(customerEmail, cb, errcb) {
   if (customerEmail === 'bob@gmail.com') {
     util.logWithDate(`[Callback Mode] Making database or network call to look up departure details for \
 customer with email: ${customerEmail}`);
@@ -11,11 +11,11 @@ customer with email: ${customerEmail}`);
       });
     }, 2000);
   } else {
-    throw new Error('Sorry, we only serve one customer - bob@gmail.com');
+    errcb('Sorry, we only serve one customer - bob@gmail.com');
   }
 }
 
-function getFlightDetails(flightId, cb) {
+function getFlightDetails(flightId, cb, errcb) {
   if (flightId === 7) {
     util.logWithDate(`[Callback Mode] Making database or network call to look up flight details for flight ID: ${flightId}`);
     setTimeout(() => {
@@ -36,11 +36,11 @@ function getFlightDetails(flightId, cb) {
       });
     }, 2000);
   } else {
-    throw new Error('Sorry, we only know about one flight Id: 7');
+    errcb('Sorry, we only know about one flight Id: 7');
   }
 }
 
-function getPassengerManifest(manifestId, cb) {
+function getPassengerManifest(manifestId, cb, errcb) {
   if (manifestId === 99) {
     util.logWithDate(`[Callback Mode] Making database or network call to look up manifest with ID: ${manifestId}`);
     setTimeout(() => {
@@ -58,11 +58,11 @@ function getPassengerManifest(manifestId, cb) {
       });
     }, 100);
   } else {
-    throw new Error('Sorry, we only know about one Manifest Id: 99');
+    errcb('Sorry, we only know about one Manifest Id: 99');
   }
 }
 
-function getForecast(date, cb) {
+function getForecast(date, cb, errcb) {
   util.logWithDate(`[Callback Mode] Making database or network call to look up forcast for date: ${date}`);
   setTimeout(() => {
     cb({
@@ -71,7 +71,7 @@ function getForecast(date, cb) {
   }, 100);
 }
 
-function getFlightEta(weatherOutlook, flightPath, cb) {
+function getFlightEta(weatherOutlook, flightPath, cb, errcb) {
   util.logWithDate(`[Callback Mode] Making database or network call to look up eta for Flight with path: ${JSON.stringify(flightPath)} \
 under weather condition: ${weatherOutlook}`);
   setTimeout(() => {

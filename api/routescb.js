@@ -47,12 +47,20 @@ router.get('/departures/:userEmail/flightDetails/eta', (req, res) => {
             // Return the result
             util.logWithDate(`[Callback Mode] getFlightEta promise resolved with: ${JSON.stringify(flightEta)}`);
             return res.status(200).send(flightEta);
+          }, (error) => {
+            return res.status(500).send(String(error));
           });
+        }, (error) => {
+          return res.status(500).send(String(error));
         });
+      }, (error) => {
+        return res.status(500).send(String(error));
       });
+    }, (error) => {
+      return res.status(500).send(String(error));
     });
   } catch (err) {
-    util.logWithDate(`[Callback Mode] Caught --- exception: ${String(err)}`);
+    util.logWithDate(`[Callback Mode] Caught exception: ${String(err)}`);
     return res.status(500).send(String(err));
   }
 });
