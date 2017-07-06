@@ -1,16 +1,12 @@
-[![build status](https://git.ask.com/XXX/badges/master/build.svg)](https://git.ask.com/XXXX/commits/master)
+[![build status](https://git.ask.com/learning-sessions/promises-example/badges/master/build.svg)](https://git.ask.com/learning-sessions/promises-example/commits/master)
 
 
-# Technical Notes
-* Promises are part of the ECMAScript 2015 (ES6) specification, specifically https://github.com/promises-aplus/promises-spec
-  * Node: Fully supported in Node 6.4 (Investopedia's current node version as of Jul 2017) - reference: http://node.green/
-  * Browser: All major browsers except IE11 - reference: https://kangax.github.io/compat-table/es6/
-    * Can use jQuery deferred - out of scope: differences between jQuery deferred and standard promises
-* TODO:
-  * chain example without promises to show nesting
-  * async/await examples
+# Intro
+A sample repository containing some examples of using javascript promises, to accompany this presentation: [Javascript Promises](https://docs.google.com/a/iacsearch.com/presentation/d/1J8O8S1gJnGjPy7jyPHwU-otrtRprD4qTp-ZYzIDfFj0/edit?usp=sharing)
 
 # Setup
+Node v7.10 or higher is required to run examples that use async/await.
+
 Clone Repository
 ```
 $ git clone git@git.ask.com:XXXXX.git
