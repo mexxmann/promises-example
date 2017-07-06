@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const myModel = require('./model');
 const util = require('./util');
@@ -132,10 +131,6 @@ async function getEtaForUserUsingAsyncAwait(userEmail, res) {
 }
 
 const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../index.html'));
-});
 
 router.get('/departures/:userEmail/flightDetails/passengerManifest', (req, res) => {
   userEmail = req.params.userEmail;

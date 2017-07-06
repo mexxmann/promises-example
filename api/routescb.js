@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const myModel = require('./modelcb');
 const util = require('./util');

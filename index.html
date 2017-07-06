@@ -5,19 +5,25 @@
     <title>Promises Example</title>
 </head>
 <body>
-    <div>Using Callbacks</div>
+    <div>Initialization Example</div>
+    <ul>
+        <li><a href="./public/InitializationUsingEvents.html">Initialization Using Events</a></li>
+        <li><a href="./public/InitializationUsingPromise.html">Initialization Using Promise</a></li>
+    </ul>
+
+    <div>Chaining Calls Using Callbacks</div>
     <ul>
         <li><a href="/cb/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
         <li><a href="/cb/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
         <li><a href="/cb/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a></li>
     </ul>
-    <div>Using Promises</div>
+    <div>Chaining Calls Using Promises</div>
     <ul>
         <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
         <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
         <li><a href="/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a></li>
     </ul>
-    <div>Using Async/Await syntax</div>
+    <div>Chaining Calls Using Async/Await syntax</div>
     <ul>
         <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
         <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
