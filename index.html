@@ -7,27 +7,28 @@
 <body>
     <div>Initialization Example</div>
     <ul>
-        <li><a href="./public/InitializationUsingEvents.html">Initialization Using Events</a></li>
-        <li><a href="./public/InitializationUsingPromise.html">Initialization Using Promise</a></li>
+        <li><a href="./public/InitializationUsingEvents.html">Initialization Using Events</a> - Change the timeout in InitializationUsingEvents.js::Authenticator.prototype.init from 2000 to 200 to break the site.
+            This demonstrates a race condition.</li>
+        <li><a href="./public/InitializationUsingPromise.html">Initialization Using Promise</a> - Fixes the issue by having Authenticator.init() return a promise.</li>
     </ul>
 
     <div>Chaining Calls Using Callbacks</div>
     <ul>
-        <li><a href="/cb/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
-        <li><a href="/cb/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
-        <li><a href="/cb/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a></li>
+        <li><a href="/cb/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->B->C</li>
+        <li><a href="/cb/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a> - Demonstrates an error handler</li>
+        <li><a href="/cb/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->(B,C)->D</li>
     </ul>
     <div>Chaining Calls Using Promises</div>
     <ul>
-        <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
-        <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
-        <li><a href="/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a></li>
+        <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->B->C</li>
+        <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest">Get Passenger Manifest for [user who doesn't exist]'s flight</a> - Demonstrates an error handler</li>
+        <li><a href="/departures/bob@gmail.com/flightDetails/eta">Get eta for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->(B,C)->D</li>
     </ul>
     <div>Chaining Calls Using Async/Await syntax</div>
     <ul>
-        <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for user bob@gmail.com's flight</a></li>
-        <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for [user who doesn't exist]'s flight</a></li>
-        <li><a href="/departures/bob@gmail.com/flightDetails/eta?useAsync=1">Get eta for user bob@gmail.com's flight</a></li>
+        <li><a href="/departures/bob@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->B->C</li>
+        <li><a href="/departures/bob2@gmail.com/flightDetails/passengerManifest?useAsync=1">Get Passenger Manifest for [user who doesn't exist]'s flight</a> - Demonstrates an error handler</li>
+        <li><a href="/departures/bob@gmail.com/flightDetails/eta?useAsync=1">Get eta for user bob@gmail.com's flight</a> - Demonstrates the sequence: A->(B,C)->D</li>
     </ul>
 </body>
 </html>

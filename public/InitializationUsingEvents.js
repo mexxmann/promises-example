@@ -7,19 +7,20 @@ Authenticator.prototype.init = function () {
   window.setTimeout(() => {
     console.log('Authenticator initialized');
     this.elem.trigger('init', { token: 'd1798adc-8dca-47b1-95c3-b6f883f29020' });
-  }, 2000);
+  }, 2000); // **** Change this timeout to 200 to break the site!
 }
 
-function StockPortfolioLister(element, auth, portfolioId) {
+function StockPortfolioList(element, auth, portfolioId) {
   this.elem = element;
-  this.authenticator = auth;
-  this.authenticator.elem.on('init', this.init.bind(this));
-  console.log('Initializing StockPortfolioLister with portfolioId: ' + portfolioId);
+  console.log('Initializing StockPortfolioList with portfolioId: ' + portfolioId);
   this.portfolioId = portfolioId;
+
+  // Do the rest of initialization once the Authenticator has finished it's initialization
+  auth.elem.on('init', this.init.bind(this));
 }
 
-StockPortfolioLister.prototype.init = function (event, token) {
-  console.log('StockPortfolioLister - authenticator provided token: ' + JSON.stringify(token));
+StockPortfolioList.prototype.init = function (event, token) {
+  console.log('StockPortfolioList - authenticator provided token: ' + JSON.stringify(token));
   this.elem.append('<div>AAPL</div>');
   this.elem.append('<div>GOOG</div>');
 }
@@ -33,10 +34,9 @@ function getPortfolioIdForUser(userEmail, callback) {
 
 function pageInit() {
   var auth = new Authenticator($('#body'));
+  auth.init(); // Fires events so all components can finish initializing after completion
 
   getPortfolioIdForUser('bob@gmail.com', function (portfolioId) {
-    $('#stockList').stockPortfolioLister = new StockPortfolioLister($('#stockList'), auth, portfolioId);
+    $('#stockList').stockPortfolioList = new StockPortfolioList($('#stockList'), auth, portfolioId);
   });
-
-  auth.init();
 }
