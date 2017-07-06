@@ -20,7 +20,7 @@ function StockPortfolioList(element, authInitPromise, portfolioId) {
   this.portfolioId = portfolioId;
 
   // Do the rest of initialization once the Authenticator has finished it's initialization
-  authInitPromise.done(this.init.bind(this));
+  authInitPromise.then(this.init.bind(this));
 }
 
 StockPortfolioList.prototype.init = function (token) {
