@@ -19,8 +19,14 @@ router.get('/departures/:userEmail/flightDetails/passengerManifest', (req, res) 
 
           // Return the result
           res.status(200).send(passengerManifest);
+        }, (error) => {
+          return res.status(500).send(String(error));
         });
+      }, (error) => {
+        return res.status(500).send(String(error));
       });
+    }, (error) => {
+      return res.status(500).send(String(error));
     });
   } catch (err) {
     util.logWithDate(`[Callback Mode] Caught <-> exception: ${String(err)}`);
