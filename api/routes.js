@@ -14,11 +14,11 @@ const util = require('./util');
  * getDeparture() -> getFlightDetails() -> getPassengerManifest()
  * to look up the passenger manifest.
  * @param {string} userEmail - user to look up
- * @param {object} res - express result object
+ * @return {object} - promise that resolves to the Passenger manifest
  */
-function getPassengerManifestForUser(userEmail, res) {
+function getPassengerManifestForUser(userEmail) {
   // 1. Get user's departure details
-  myModel.getDeparture(userEmail)
+  return myModel.getDeparture(userEmail)
 
   // 2. Use departure details to get flight details
   .then((departure) => {
@@ -32,24 +32,23 @@ function getPassengerManifestForUser(userEmail, res) {
 
   // Return the result
   .then((passengerManifest) => {
-    return res.status(200).send(passengerManifest);
+    return passengerManifest;
   })
 
   // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
   // an exception.
   .catch((err) => {
-    util.logWithDate(`Caught exception: ${String(err)}`);
-    return res.status(500).send(err);
+    util.logWithDate(`getPassengerManifestForUser - Caught exception: ${String(err)}`);
+    throw err;
   });
 }
 
 /**
  * Same as getPassengerManifestForUser except using async/await syntax
  * @param {string} userEmail - user to look up
- * @param {object} res - express result object
- * @return {object} - whatever res.status returns
+ * @return {object} - promise that resolves to the Passenger manifest
  */
-async function getPassengerManifestForUserUsingAsyncAwait(userEmail, res) {
+async function getPassengerManifestForUserUsingAsyncAwait(userEmail) {
   try {
     // 1. Get user's departure details
     const departure = await myModel.getDeparture(userEmail);
@@ -62,13 +61,13 @@ async function getPassengerManifestForUserUsingAsyncAwait(userEmail, res) {
 
     // Return the result
     util.logWithDate(`getPassengerManifest promise resolved with: ${JSON.stringify(passengerManifest)}`);
-    return res.status(200).send(passengerManifest);
+    return passengerManifest;
 
     // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
     // an exception.
   } catch (err) {
-    util.logWithDate(`Caught exception: ${String(err)}`);
-    return res.status(500).send(err);
+    util.logWithDate(`getPassengerManifestForUserUsingAsyncAwait - Caught exception: ${String(err)}`);
+    throw err;
   }
 }
 
@@ -78,11 +77,11 @@ async function getPassengerManifestForUserUsingAsyncAwait(userEmail, res) {
  *                |-> getForecast()      |
  * to look up user's ETA.
  * @param {string} userEmail - user to look up
- * @param {object} res - express result object
+ * @return {object} - promise that resolves to the Eta
  */
-function getEtaForUser(userEmail, res) {
+function getEtaForUser(userEmail) {
   // 1. Get user's departure details
-  myModel.getDeparture(userEmail)
+  return myModel.getDeparture(userEmail)
 
   // 2. Use departure details to get flight and weather details simultaneously
   .then((departure) => {
@@ -99,24 +98,23 @@ function getEtaForUser(userEmail, res) {
   // Return the result
   .then((flightEta) => {
     util.logWithDate(`getFlightEta promise resolved with: ${JSON.stringify(flightEta)}`);
-    return res.status(200).send(flightEta);
+    return flightEta;
   })
 
   // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
   // an exception.
   .catch((err) => {
-    util.logWithDate(`Caught exception: ${String(err)}`);
-    return res.status(500).send(err);
+    util.logWithDate(`getEtaForUser - Caught exception: ${String(err)}`);
+    throw err;
   });
 }
 
 /**
  * Same as getEtaForUser except using async/await syntax
  * @param {string} userEmail - user to look up
- * @param {object} res - express result object
- * @return {object} - whatever res.status returns
+ * @return {object} - promise that resolves to the Eta
  */
-async function getEtaForUserUsingAsyncAwait(userEmail, res) {
+async function getEtaForUserUsingAsyncAwait(userEmail) {
   try {
     // 1. Get user's departure details
     const departure = await myModel.getDeparture(userEmail);
@@ -131,13 +129,13 @@ async function getEtaForUserUsingAsyncAwait(userEmail, res) {
 
     // Return the result
     util.logWithDate(`getFlightEta promise resolved with: ${JSON.stringify(flightEta)}`);
-    return res.status(200).send(flightEta);
+    return flightEta;
 
     // Handle any errors.  Notice how error handling can be consolidated because the promise chain stops if there's
     // an exception.
   } catch (err) {
-    util.logWithDate(`Caught exception: ${String(err)}`);
-    return res.status(500).send(err);
+    util.logWithDate(`getEtaForUserUsingAsyncAwait - Caught exception: ${String(err)}`);
+    throw err;
   }
 }
 
@@ -147,26 +145,34 @@ router.get('/departures/:userEmail/flightDetails/passengerManifest', (req, res) 
   userEmail = req.params.userEmail;
   util.logWithDate(`userEmail: ${userEmail}`);
 
-  const useAsync = req.query.useAsync;
-  if (useAsync) {
+  let func = getPassengerManifestForUser;
+  if (req.query.useAsync) {
     util.logWithDate('Using async/await syntax');
-    return getPassengerManifestForUserUsingAsyncAwait(userEmail, res);
+    func = getPassengerManifestForUserUsingAsyncAwait;
   }
 
-  return getPassengerManifestForUser(userEmail, res);
+  func(userEmail).then((result) => {
+    return res.status(200).send(result);
+  }).catch((err) => {
+    return res.status(500).send(err);
+  });
 });
 
 router.get('/departures/:userEmail/flightDetails/eta', (req, res) => {
   userEmail = req.params.userEmail;
   util.logWithDate(`userEmail: ${userEmail}`);
 
-  const useAsync = req.query.useAsync;
-  if (useAsync) {
+  let func = getEtaForUser;
+  if (req.query.useAsync) {
     util.logWithDate('Using async/await syntax');
-    return getEtaForUserUsingAsyncAwait(userEmail, res);
+    func = getEtaForUserUsingAsyncAwait;
   }
 
-  return getEtaForUser(userEmail, res);
+  func(userEmail).then((result) => {
+    return res.status(200).send(result);
+  }).catch((err) => {
+    return res.status(500).send(err);
+  });
 });
 
 module.exports = router;
