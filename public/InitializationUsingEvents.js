@@ -12,12 +12,12 @@ function Authenticator(elem) {
   this.elem = elem;
 }
 
-Authenticator.prototype.init = function () {
-  window.setTimeout(() => {
+Authenticator.prototype.init = function init() {
+  window.setTimeout(function authInitCallback() {
     console.log('Authenticator initialized');
     this.elem.trigger('init', { token: 'd1798adc-8dca-47b1-95c3-b6f883f29020' });
   }, 2000); // **** Change this timeout to 200 to break the site!
-}
+};
 
 function StockPortfolioList(element, auth, portfolioId) {
   this.elem = element;
@@ -28,14 +28,14 @@ function StockPortfolioList(element, auth, portfolioId) {
   auth.elem.on('init', this.init.bind(this));
 }
 
-StockPortfolioList.prototype.init = function (event, token) {
+StockPortfolioList.prototype.init = function init(event, token) {
   console.log('StockPortfolioList - authenticator provided token: ' + JSON.stringify(token));
   this.elem.append('<div>AAPL</div>');
   this.elem.append('<div>GOOG</div>');
-}
+};
 
 function getPortfolioIdForUser(userEmail, callback) {
-  window.setTimeout(function () {
+  window.setTimeout(function getPortfolioIdSqlCallback() {
     console.log('Finished getting portfolio id for user with email: ' + userEmail);
     callback('12345');
   }, 1000);
@@ -45,7 +45,11 @@ function pageInit() {
   var auth = new Authenticator($('#body'));
   auth.init(); // Fires events so all components can finish initializing after completion
 
-  getPortfolioIdForUser('bob@gmail.com', function (portfolioId) {
+  getPortfolioIdForUser('bob@gmail.com', function getPortfolioIdForUserCallback(portfolioId) {
     $('#stockList').stockPortfolioList = new StockPortfolioList($('#stockList'), auth, portfolioId);
   });
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = pageInit;
 }
