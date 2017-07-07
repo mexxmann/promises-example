@@ -1,3 +1,8 @@
+/**
+ * @file The functions in this module contain the re-usable business logic for the flight examples
+ * using promises
+ */
+
 const util = require('./util');
 
 /**
@@ -54,6 +59,11 @@ function getFlightDetails(flightId) {
   });
 }
 
+/**
+ * Resolves an airport code to an airport name
+ * @param {string} airportCode - the airport code to resolve
+ * @return {Promise} - the airport name (asynchronously)
+ */
 function resolveAirportCode(airportCode) {
   return new Promise((resolve, reject) => {
     const sleepTime = Math.floor((Math.random() * 2000) + 1000);

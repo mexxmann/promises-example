@@ -1,3 +1,12 @@
+/**
+ * @file This example shows an initialization sequence using events that has a race-condition between the
+ * Authenticator.init() and the getPortfolioIdForUser() functions.
+ * getPortfolioIdForUser() must complete first for correct behavior, else the StockPortfolioList misses attaching
+ * to the Authenticator.init event handler
+ *
+ * It accomapnies the Initialization use case slides from
+ * https://docs.google.com/presentation/d/1J8O8S1gJnGjPy7jyPHwU-otrtRprD4qTp-ZYzIDfFj0
+ */
 
 function Authenticator(elem) {
   this.elem = elem;

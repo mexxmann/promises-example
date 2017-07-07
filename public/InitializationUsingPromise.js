@@ -1,3 +1,9 @@
+/**
+ * @file This example shows an initialization sequence using a promise that has the race-condition from
+ * InitializationUsingEvents.js fixed.
+ * It accomapnies the Initialization use case slides from
+ * https://docs.google.com/presentation/d/1J8O8S1gJnGjPy7jyPHwU-otrtRprD4qTp-ZYzIDfFj0
+ */
 
 function Authenticator(elem) {
   this.elem = elem;

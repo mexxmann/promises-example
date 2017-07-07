@@ -1,3 +1,10 @@
+/**
+ * @file The examples in this file show usages of callbacks that result in the 'pyramid of doom'
+ *
+ * It accomapnies the Chaining and Simulaneous Execution slides from
+ * https://docs.google.com/presentation/d/1J8O8S1gJnGjPy7jyPHwU-otrtRprD4qTp-ZYzIDfFj0
+ */
+
 const express = require('express');
 const myModel = require('./modelcb');
 const util = require('./util');

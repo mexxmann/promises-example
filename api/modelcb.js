@@ -1,3 +1,8 @@
+/**
+ * @file The functions in this module contain the re-usable business logic for the flight examples
+ * WITHOUT using promises
+ */
+
 const util = require('./util');
 
 function getDeparture(customerEmail, cb, errcb) {

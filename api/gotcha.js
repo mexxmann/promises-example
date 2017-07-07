@@ -1,3 +1,9 @@
+/**
+ * @file This example shows mistakes! Don't copy code from here!
+ *
+ * It accomapnies the Common Mistakes slide from
+ * https://docs.google.com/presentation/d/1J8O8S1gJnGjPy7jyPHwU-otrtRprD4qTp-ZYzIDfFj0
+ */
 const express = require('express');
 const myModel = require('./model');
 const util = require('./util');
