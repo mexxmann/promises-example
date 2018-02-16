@@ -13,7 +13,9 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -27,5 +29,7 @@
     "sinon": "^2.2.0",
     "supertest": "^3.0.0"
   },
-  "engines" : { "node" : ">=7.6.0" }
+  "engines": {
+    "node": ">=7.6.0"
+  }
 }
